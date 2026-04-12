@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DotNetFlix.Api/DotNetFlix.Api.csproj" />
+  <Project Path="DotNetFlix.Application/DotNetFlix.Application.csproj" />
+  <Project Path="DotNetFlix.Domain/DotNetFlix.Domain.csproj" />
+  <Project Path="DotNetFlix.Infrastructure/DotNetFlix.Infrastructure.csproj" />
+</Solution>

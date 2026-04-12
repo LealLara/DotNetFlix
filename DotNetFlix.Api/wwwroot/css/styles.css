@@ -1,0 +1,367 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0a0a0f;
+    overflow-x: hidden;
+    color: #fff;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 50%, rgba(0, 50, 80, 0.3) 0%, rgba(0, 0, 0, 0.95) 100%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+.dotnet-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.dotnet-header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00ffff, #0066ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -1px;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+    .logo small {
+        font-size: 0.8rem;
+        font-weight: 400;
+        background: none;
+        -webkit-background-clip: unset;
+        background-clip: unset;
+        color: rgba(255,255,255,0.6);
+    }
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 2rem 2rem;
+}
+
+.carousel-section {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.carousel-container {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-video-wrapper {
+    position: relative;
+    width: 100%;
+    background: #000;
+}
+
+.carousel-video {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    background: #000;
+    display: block;
+}
+
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7), transparent);
+    padding: 3rem 2rem 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-container:hover .video-overlay {
+    transform: translateY(0);
+}
+
+.video-title-dotnet {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff, #00ffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.video-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.badge-dotnet {
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 40px;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .indicator.active {
+        background: #00ffff;
+        box-shadow: 0 0 10px #00ffff;
+        width: 60px;
+    }
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    color: #00ffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 20;
+    font-size: 1.5rem;
+}
+
+    .carousel-control:hover {
+        background: rgba(0, 255, 255, 0.2);
+        border-color: #00ffff;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-control.prev {
+        left: 20px;
+    }
+
+    .carousel-control.next {
+        right: 20px;
+    }
+
+.upnext-section {
+    margin-top: 2rem;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    color: #00ffff;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .section-title::before {
+        content: '';
+        width: 30px;
+        height: 2px;
+        background: #00ffff;
+        box-shadow: 0 0 10px #00ffff;
+    }
+
+.thumbnail-carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #00ffff #1a1a2e;
+    padding-bottom: 10px;
+}
+
+    .thumbnail-carousel::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .thumbnail-carousel::-webkit-scrollbar-track {
+        background: #1a1a2e;
+        border-radius: 10px;
+    }
+
+    .thumbnail-carousel::-webkit-scrollbar-thumb {
+        background: #00ffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #00ffff;
+    }
+
+.thumbnail-item {
+    min-width: 280px;
+    background: linear-gradient(135deg, #0a0a0f, #0d1117);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .thumbnail-item:hover {
+        border-color: #00ffff;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+    }
+
+.thumbnail-preview {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #1a1a2e, #0a0a0f);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+    .thumbnail-preview::after {
+        content: '▶';
+        position: absolute;
+        font-size: 2rem;
+        color: #00ffff;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+.thumbnail-item:hover .thumbnail-preview::after {
+    opacity: 1;
+}
+
+.thumbnail-title {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #fff;
+}
+
+.thumbnail-duration {
+    font-size: 0.75rem;
+    color: rgba(0, 255, 255, 0.7);
+}
+
+.dotnet-status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid #00ffff;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    color: #00ffff;
+    font-size: 0.85rem;
+    z-index: 2000;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+    .dotnet-status.show {
+        transform: translateX(0);
+    }
+
+.dotnet-loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+}
+
+.dotnet-spinner {
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(0, 255, 255, 0.2);
+    border-top-color: #00ffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 70px 1rem 1rem;
+    }
+
+    .carousel-control {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .video-title-dotnet {
+        font-size: 1.2rem;
+    }
+
+    .thumbnail-item {
+        min-width: 220px;
+    }
+} 

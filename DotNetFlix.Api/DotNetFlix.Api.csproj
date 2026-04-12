@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>48523fda-484a-4fbf-852f-fb1dfc133591</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetFlix.Application\DotNetFlix.Application.csproj" />
+    <ProjectReference Include="..\DotNetFlix.Infrastructure\DotNetFlix.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\videos\primary\video35.mp4" />
+    <None Include="wwwroot\videos\primary\video34.mp4" />
+    <None Include="wwwroot\videos\primary\video33.mp4" />
+    <None Include="wwwroot\videos\primary\video11.mp4" />
+    <None Include="wwwroot\videos\primary\video10.mp4" />
+    <None Include="wwwroot\videos\primary\video29.mp4" />
+    <None Include="wwwroot\videos\primary\video30.mp4" />
+    <None Include="wwwroot\videos\primary\video28.mp4" />
+    <None Include="wwwroot\videos\primary\video27.mp4" />
+    <None Include="wwwroot\videos\primary\video25.mp4" />
+    <None Include="wwwroot\videos\primary\video26.mp4" />
+    <None Include="wwwroot\videos\primary\video24.mp4" />
+    <None Include="wwwroot\videos\primary\video23.mp4" />
+    <None Include="wwwroot\videos\primary\video20.mp4" />
+    <None Include="wwwroot\videos\primary\video19.mp4" />
+    <None Include="wwwroot\videos\primary\video18.mp4" />
+    <None Include="wwwroot\videos\primary\video100.mp4" />
+    <None Include="wwwroot\videos\primary\video13.mp4" />
+    <None Include="wwwroot\videos\primary\video15.mp4" />
+    <None Include="wwwroot\videos\primary\video14.mp4" />
+    <None Include="wwwroot\videos\primary\video1.mp4" />
+    <None Include="wwwroot\videos\primary\video12.mp4" />
+    <None Include="wwwroot\videos\primary\video97.mp4" />
+    <None Include="wwwroot\videos\primary\video50.mp4" />
+    <None Include="wwwroot\videos\primary\video9.mp4" />
+    <None Include="wwwroot\videos\primary\video8.mp4" />
+    <None Include="wwwroot\videos\primary\video16.mp4" />
+    <None Include="wwwroot\videos\primary\video6.mp4" />
+    <None Include="wwwroot\videos\primary\video5.mp4" />
+    <None Include="wwwroot\videos\primary\video4.mp4" />
+    <None Include="wwwroot\videos\primary\video3.mp4" />
+    <None Include="wwwroot\videos\primary\video31.mp4" />
+    <None Include="wwwroot\videos\primary\video32.mp4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Request\" />
+  </ItemGroup>
+
+</Project>

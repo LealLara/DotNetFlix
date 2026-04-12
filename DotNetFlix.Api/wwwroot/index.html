@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOT.NET.FLIX | Streaming Experience</title>
+    <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <div class="dotnet-header">
+            <div class="dotnet-header-content">
+                <div class="logo">
+                    DOT.NET.FLIX <small>| stream</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <div class="carousel-section">
+                <div class="carousel-container">
+                    <div class="carousel-video-wrapper">
+                        <video id="carouselVideo" class="carousel-video" autoplay muted></video>
+                        <div class="video-overlay">
+                            <div class="video-title-dotnet" id="currentVideoTitle">Carregando...</div>
+                            <div class="video-meta">
+                                <span class="badge-dotnet"> STREAMING</span>
+                                <span class="badge-dotnet"> 4K READY</span>
+                                <span id="videoCounter" class="badge-dotnet">0/0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-control prev" onclick="prevVideo()">◀</div>
+                    <div class="carousel-control next" onclick="nextVideo()">▶</div>
+
+                    <div class="carousel-indicators" id="carouselIndicators"></div>
+                </div>
+            </div>
+
+            <div class="upnext-section">
+                <div class="section-title">PRÓXIMOS VÍDEOS</div>
+                <div class="thumbnail-carousel" id="thumbnailCarousel"></div>
+            </div>
+        </div>
+
+        <div id="dotnetStatus" class="dotnet-status"></div>
+
+        <script>
+            const API_BASE = 'https://localhost:44334/api/movies';
+            let videos = [];
+            let currentIndex = 0;
+            let carouselInterval;
+            let isPlaying = true;
+            let videoPlayer = document.getElementById('carouselVideo');
+
+            function showStatus(message, isError = false) {
+                const statusDiv = document.getElementById('dotnetStatus');
+                statusDiv.textContent = message;
+                statusDiv.style.borderColor = isError ? '#ff0066' : '#00ffff';
+                statusDiv.style.color = isError ? '#ff0066' : '#00ffff';
+                statusDiv.classList.add('show');
+                setTimeout(() => {
+                    statusDiv.classList.remove('show');
+                }, 3000);
+            }
+
+            async function loadVideos() {
+                try {
+                    const response = await fetch(`${API_BASE}/carousel`);
+                    if (!response.ok) throw new Error('Erro ao carregar vídeos');
+                    videos = await response.json();
+
+                    if (videos.length === 0) {
+                        showStatus('Nenhum vídeo encontrado na pasta primary', true);
+                        return false;
+                    }
+
+                    showStatus(`✅ ${videos.length} vídeos carregados`);
+                    createIndicators();
+                    renderThumbnails();
+                    startCarousel();
+                    return true;
+                } catch (error) {
+                    console.error('Erro:', error);
+                    showStatus('Erro ao conectar com o servidor', true);
+                    return false;
+                }
+            }
+
+            function createIndicators() {
+                const container = document.getElementById('carouselIndicators');
+                container.innerHTML = '';
+                videos.forEach((_, index) => {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'indicator' + (index === currentIndex ? ' active' : '');
+                    indicator.onclick = () => jumpToVideo(index);
+                    container.appendChild(indicator);
+                });
+            }
+
+            function updateIndicators() {
+                const indicators = document.querySelectorAll('.indicator');
+                indicators.forEach((ind, idx) => {
+                    if (idx === currentIndex) {
+                        ind.classList.add('active');
+                    } else {
+                        ind.classList.remove('active');
+                    }
+                });
+
+                const counter = document.getElementById('videoCounter');
+                if (counter) {
+                    counter.textContent = `${currentIndex + 1}/${videos.length}`;
+                }
+            }
+
+            function renderThumbnails() {
+                const container = document.getElementById('thumbnailCarousel');
+                container.innerHTML = videos.map((video, idx) => `
+                        <div class="thumbnail-item" onclick="jumpToVideo(${idx})">
+                            <div class="thumbnail-preview">
+                                🎬
+                            </div>
+                            <div class="thumbnail-title">${formatName(video.name)}</div>
+                            <div class="thumbnail-duration">Clique para assistir</div>
+                        </div>
+                    `).join('');
+            }
+
+            function formatName(fileName) {
+                return fileName
+                    .replace('.mp4', '')
+                    .replace('.MP4', '')
+                    .replace(/_/g, ' ')
+                    .replace(/-/g, ' ')
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+            }
+
+            async function loadCurrentVideo() {
+                if (!videos.length || !videos[currentIndex]) return;
+
+                const video = videos[currentIndex];
+                const videoUrl = video.url;
+
+                document.getElementById('currentVideoTitle').textContent = formatName(video.name);
+
+                videoPlayer.src = videoUrl;
+                videoPlayer.load();
+
+                try {
+                    await videoPlayer.play();
+                    isPlaying = true;
+                } catch (err) {
+                    console.log('Autoplay bloqueado:', err);
+                    showStatus('Clique no vídeo para ativar o som e reprodução', false);
+
+                    videoPlayer.muted = true;
+                    await videoPlayer.play();
+                }
+
+                updateIndicators();
+
+                highlightCurrentThumbnail();
+            }
+
+            function highlightCurrentThumbnail() {
+                const thumbnails = document.querySelectorAll('.thumbnail-item');
+                thumbnails.forEach((thumb, idx) => {
+                    if (idx === currentIndex) {
+                        thumb.style.borderColor = '#00ffff';
+                        thumb.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0.3)';
+                    } else {
+                        thumb.style.borderColor = 'rgba(0, 255, 255, 0.2)';
+                        thumb.style.boxShadow = 'none';
+                    }
+                });
+            }
+
+            function nextVideo() {
+                if (videos.length === 0) return;
+                currentIndex = (currentIndex + 1) % videos.length;
+                loadCurrentVideo();
+                resetAutoPlay();
+            }
+
+            function prevVideo() {
+                if (videos.length === 0) return;
+                currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+                loadCurrentVideo();
+                resetAutoPlay();
+            }
+
+            function jumpToVideo(index) {
+                if (index === currentIndex) return;
+                currentIndex = index;
+                loadCurrentVideo();
+                resetAutoPlay();
+            }
+
+            function resetAutoPlay() {
+                if (carouselInterval) {
+                    clearInterval(carouselInterval);
+                }
+                carouselInterval = setInterval(() => {
+                    if (isPlaying) {
+                        nextVideo();
+                    }
+                }, 8000);
+            }
+
+            function startCarousel() {
+                loadCurrentVideo();
+                resetAutoPlay();
+
+                videoPlayer.addEventListener('ended', () => {
+                    nextVideo();
+                });
+
+                videoPlayer.addEventListener('play', () => {
+                    isPlaying = true;
+                });
+
+                videoPlayer.addEventListener('pause', () => {
+                    isPlaying = false;
+                });
+
+                videoPlayer.addEventListener('error', (e) => {
+                    console.error('Erro no vídeo:', e);
+                    showStatus(`Erro ao carregar ${formatName(videos[currentIndex]?.name)}`, true);
+                    setTimeout(() => nextVideo(), 3000);
+                });
+            }
+
+            async function init() {
+                await loadVideos();
+            }
+
+            init();
+        </script>
+    </body>
+    </html>
