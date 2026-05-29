@@ -1,5 +1,4 @@
-﻿using DotNetFlix.Api.Models.Result;
-using DotNetFlix.Domain.Interfaces.IServices;
+﻿ using DotNetFlix.Application.Interfaces.Services; 
 using DotNetFlix.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,7 +48,7 @@ namespace DotNetFlix.Api.Controllers
         public IActionResult GetCarouselVideos()
         {
             string? baseUrl = $"{Request.Scheme}://{Request.Host}";
-            List<Video> videos = _service.GetCarouselVideos(baseUrl);
+            List<VideoModel> videos = _service.GetCarouselVideos(baseUrl);
 
             return Ok(videos);
         }

@@ -1,4 +1,5 @@
-﻿using DotNetFlix.Domain.Interfaces.IRepository;
+﻿using DotNetFlix.Application.Interfaces.IRepository;
+using DotNetFlix.Domain.Interfaces.IRepository;
 
 namespace DotNetFlix.Infrastructure.Repositories
 {

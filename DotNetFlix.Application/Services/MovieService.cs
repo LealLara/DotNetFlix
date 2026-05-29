@@ -1,5 +1,6 @@
-﻿using DotNetFlix.Domain.Interfaces.IRepository;
-using DotNetFlix.Domain.Interfaces.IServices;
+﻿using DotNetFlix.Application.Interfaces.IRepository;
+using DotNetFlix.Application.Interfaces.Services;
+using DotNetFlix.Domain.Interfaces.IRepository; 
 using DotNetFlix.Domain.Models;
 
 namespace DotNetFlix.Application.Services
@@ -35,7 +36,7 @@ namespace DotNetFlix.Application.Services
         /// <returns>
         /// Retorna uma lista de vídeos formatados para exibição em carrossel.
         /// </returns>
-        public List<Video> GetCarouselVideos(string baseUrl)
+        public List<VideoModel> GetCarouselVideos(string baseUrl)
         {
             var files = _repository.GetAllVideos();
 
@@ -43,7 +44,7 @@ namespace DotNetFlix.Application.Services
             {
                 var fileName = Path.GetFileName(file);
 
-                return new Video
+                return new VideoModel
                 {
                     Name = fileName,
                     Url = $"{baseUrl}/api/movies/play/{Uri.EscapeDataString(fileName)}"
