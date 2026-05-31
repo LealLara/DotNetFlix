@@ -4,5 +4,6 @@ namespace DotNetFlix.Infrastructure.Repositories
 {
     public class LogRepository : ILogRepository
     {
+
     }
 }
